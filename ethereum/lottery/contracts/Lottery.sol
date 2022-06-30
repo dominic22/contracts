@@ -1,10 +1,10 @@
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.4.17;
 
 contract Lottery {
     address public manager;
     address[] public players;
 
-    constructor() {
+    function Lottery() public {
         manager = msg.sender;
     }
 
@@ -30,7 +30,8 @@ contract Lottery {
 
     function pickWinner() public restricted {
         uint256 index = random() % players.length;
-        payable(players[index]).transfer(address(this).balance);
+        // new solidity: payable(players[index]).transfer(address(this).balance);
+        players[index].transfer(this.balance);
         players = new address[](0);
     }
 
